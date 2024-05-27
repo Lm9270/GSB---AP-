@@ -13,7 +13,7 @@
  */
 function estConnecte()
 {
-    return isset($_SESSION['idVisiteur']);
+    return isset($_SESSION['id']);
 }
 
 /**
@@ -25,11 +25,12 @@ function estConnecte()
  *
  * @return null
  */
-function connecter($idVisiteur, $nom, $prenom)
+function connecter($id, $nom, $prenom, $metier)
 {
-    $_SESSION['idVisiteur'] = $idVisiteur;
+    $_SESSION['id'] = $id;
     $_SESSION['nom'] = $nom;
     $_SESSION['prenom'] = $prenom;
+    $_SESSION['metier'] = $metier; 
 }
 
 /**
@@ -40,6 +41,7 @@ function connecter($idVisiteur, $nom, $prenom)
 function deconnecter()
 {
     session_destroy();
+
 }
 
 /**
@@ -239,3 +241,34 @@ function nbErreurs()
         return count($_REQUEST['erreurs']);
     }
 }
+
+/**
+ * Teste la validité et le format d'un fichier à déposer 
+ * 
+ * @return String un message d'erreur si le fichier ne correspond pas 
+ * 
+ */
+
+ function verifierFichier()
+ {
+    if (isset($_FILES['justificatif']) && $_FILES['justificatif']['error'] === 0)
+    {
+        if ($_FILES['screenshot']['size'] < 1000000)
+        {
+            $fileInfo = pathinfo($_FILES['justificatif']['name']);
+            $extension = $fileInfo['extention']; 
+            $allowedExtensions = ['jpg', 'png', 'jpeg', 'txt', 'odt'];
+            
+            if (in_array($extension, $allowedExtensions))
+            {
+                move_uploaded_file($_FILES['justificatif']['tmp_name'], $path . basename($_FILES['justificatif']['name'])); 
+            } else {
+                return "L'envoie n'a pas pu être effectué, l'extension {$extension} n'est pas autorisée"; 
+            }
+        } else {
+            return "L'envoie n'a pas pu être effectué, fichier trop volumineux";
+        }
+    } else {
+        return "L'envoie n'a pas pu être effectué, erreur lors de l'upload";
+    }
+ }

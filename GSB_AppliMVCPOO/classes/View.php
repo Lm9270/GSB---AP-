@@ -20,21 +20,38 @@ class View
         $template = $this->template;
         //Récupérer la vue sous forme de variable
         ob_start();
+
         //Si vue v_etatFrais demandée inclure avant v_listeMois
         if($template == 'v_etatFrais')
         {
             include(VIEW.'v_listeMois.php');
         }
+
+        var_dump($template); 
+        // Template principal 
         include(VIEW.$template.'.php');
+
+
         //Si vue v_listeFraisForfait demandée inclure après v_listeFraisHorsForfait
         if($template == 'v_listeFraisForfait')
         {
             include(VIEW.'v_listeFraisHorsForfait.php');
         }
-        //Valoriser $contentPage par le contenu de la/les vues générées
+         //Valoriser $contentPage par le contenu de la/les vues générées
         $contentPage = ob_get_clean();
-        //Afficher le gabarit
-        include_once(VIEW.'_gabarit.php');
+
+        //Afficher le gabarit approprié 
+        if (isset($_SESSION['metier']) && $_SESSION['metier'] == 'visiteur')
+        {
+            include_once(VIEW.'_gabarit.php');
+        }
+        else 
+        {
+            include_once(VIEW.'c_gabarit.php'); 
+        }
+    
+        
+
     }
 
     public function redirect($route)

@@ -9,12 +9,14 @@ class Routeur
     private $request;
     //Tableau des routes
     private $routes =  [ 
-                            "connexion"             => ["controller" => "Visiteur", "method" => "connexion"], 
-                            "valider"               => ["controller" => "Visiteur", "method" => "validerConnexion"], 
-                            "deconnexion"           => ["controller" => "Visiteur", "method" => "deconnexion"],
-                            "accueil"               => ["controller" => "Visiteur", "method" => "accueil"],
+                            "connexion"             => ["controller" => "User", "method" => "connexion"], 
+                            "valider"               => ["controller" => "User", "method" => "validerConnexion"], 
+                            "deconnexion"           => ["controller" => "User", "method" => "deconnexion"],
+                            "accueil"               => ["controller" => "Visiteur", "method" => "v_accueil"],
+                            "c_accueil"             => ['controller' => "Comptable", "method" => "c_accueil"],
                             "gererFrais"            => ["controller" => "Visiteur", "method" => "gererFrais"],
-                            "etatFrais"             => ["controller" => "Visiteur", "method" => "etatFrais"]
+                            "etatFrais"             => ["controller" => "Visiteur", "method" => "etatFrais"],
+                            "validerFrais"          => ["controller" => "Comptable", "method" => "validerFrais"],
                         ];
 
     public function __construct($request)

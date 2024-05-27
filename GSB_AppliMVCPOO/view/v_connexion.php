@@ -36,6 +36,18 @@
                                        placeholder="Mot de passe" name="mdp"
                                        type="password" maxlength="45">
                             </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        poste au sein de l'entreprie : 
+                                    </span>
+                                    <input type="radio" id="visiteur" name="metier" value="visiteur" checked>
+                                    <label for="visiteur">Visiteur </label>
+                                    <input type="radio" id="comptable" name="metier" value="comptable">
+                                    <label for="comptable">Comptable </label>
+                                    
+                                </div>
+                            </div>
                         </div>
                         <input class="btn btn-lg btn-success btn-block"
                                type="submit" value="Se connecter">

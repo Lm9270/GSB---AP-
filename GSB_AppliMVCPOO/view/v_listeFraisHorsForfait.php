@@ -47,7 +47,7 @@
     <h3>Nouvel élément hors forfait</h3>
     <div class="col-md-4">
         <form action="<?= HOST; ?>gererFrais/action/validerCreationFrais"
-              method="post" role="form">
+              method="post" role="form" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="txtDateHF">Date (jj/mm/aaaa): </label>
                 <input type="text" id="txtDateHF" name="dateFrais"
@@ -66,8 +66,16 @@
                            class="form-control" value="">
                 </div>
             </div>
+            <div class="form-group">
+                <label for="documentsHF">Pièce justificatives : </label>
+
+                <div class="input-group">
+                    
+                </div>
+            </div>
             <button class="btn btn-success" type="submit">Ajouter</button>
             <button class="btn btn-danger" type="reset">Effacer</button>
         </form>
     </div>
 </div>
+

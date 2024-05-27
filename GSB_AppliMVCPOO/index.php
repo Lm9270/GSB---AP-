@@ -18,6 +18,7 @@ MyAutoload::start();
 
 //Utilisateur déjà connecté ?
 session_start();
+
 $estConnecte = estConnecte();
 
 //Récupérer la demande de la requête

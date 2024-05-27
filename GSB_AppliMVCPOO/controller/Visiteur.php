@@ -8,47 +8,8 @@
 
 class Visiteur
 {
-    public function connexion($params)
-    {
-        $myView = new View('v_connexion');
-        $myView->render(array('estConnecte' => null));
-    }
 
-    public function validerConnexion($params)
-    {   
-        //extraction des paramètres pour récupérer action à faire et autres (GET|POST)
-        extract($params);
-        //Le visiteur existe-t-il ?
-        $pdo = GsbManager::getPdoGsb();
-        $visiteur = $pdo->getInfosVisiteur($login, $mdp);
-        if (!is_array($visiteur)) {
-            //Vue erreur informations erronnées
-            ajouterErreur('Login ou mot de passe incorrect');
-            $myView = new View('v_erreurs');
-            $myView->render(array('estConnecte' => null, 'retour' => "/"));
-        } else {
-            //Récupérer les données extraites de la BD
-            $id = $visiteur['id'];
-            $nom = $visiteur['nom'];
-            $prenom = $visiteur['prenom'];
-            //Appel de la méthode connecter()
-            connecter($id, $nom, $prenom);
-            //Affichage de la vue accueil Visiteur
-            $myView = new View('v_accueil');
-            $myView->render(array('estConnecte' => true));
-        }
-    }
-    
-    public function deconnexion($params)
-    {
-        //Appel de la vue
-        $myView = new View('v_deconnexion');
-        deconnecter();
-        $myView->render(array('estConnecte' => true));
-    }
-
-    
-    public function accueil($params)
+    public function v_accueil($params)
     {
         //extraction des paramètres pour récupérer action à faire et autres (GET|POST)
         extract($params);
@@ -61,7 +22,7 @@ class Visiteur
     public function gererFrais($params)
     {
         //Recup les données en cours du Visiteur
-        $idVisiteur = $_SESSION['idVisiteur'];
+        $idVisiteur = $_SESSION['id'];
         $mois = getMois(date('d/m/Y'));
         $numAnnee = substr($mois, 0, 4);
         $numMois = substr($mois, 4, 2);
@@ -130,7 +91,7 @@ class Visiteur
     {
         $pdo = GsbManager::getPdoGsb();
         //Recup les données actuelles
-        $idVisiteur = $_SESSION['idVisiteur'];
+        $idVisiteur = $_SESSION['id'];
         //extraction des paramètres pour récupérer action à faire et autres (GET|POST)
         extract($params);
         //En fonction de l'action demandée par le visiteur
