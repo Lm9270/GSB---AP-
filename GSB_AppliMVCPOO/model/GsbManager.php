@@ -542,5 +542,25 @@ class GsbManager
 
         return $requetePrepare->fetch(); 
      }
+
+     /** 
+      * Modifie l'état d'une fiche de frais de CL à VA
+      * Sert a valider des fiches de frais
+      */
+     public function modifierEtatFrais($idVisiteur, $mois)
+    {
+        $query = 'UPDATE fichefrais 
+                SET idEtat = "VA"
+                WHERE idVisiteur = :idVisiteur
+                AND mois = :mois '; 
+
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['idVisiteur' => $idVisiteur, 
+                                    'mois' => $mois]); 
+
+    }
+
 }
+
+
 

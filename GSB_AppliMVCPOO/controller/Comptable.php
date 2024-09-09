@@ -32,7 +32,6 @@
          } else {
             $idVisiteur = null; 
          }
-
  
          switch($action)
          {
@@ -50,6 +49,14 @@
                                  'idVisiteur' => $idVisiteur,
                                  'infosVisiteur' => $infosVisiteur));
                  break;
+            case 'valider':
+                    $pdo->modifierEtatFrais($idVisiteur, $mois); 
+                    ajouterInformation("La fiche de frais du visiteur " . $infosVisiteur['nom'] . " " . $infosVisiteur['prenom'] . " du " . $mois . " a bien été validée"); 
+                    $myView = new View('c_confirmationValidation');
+                    $myView->render(array('estConnecte' => true, 
+                    'mois' => $mois, 
+                )); 
+            break; 
 
              case 'voirEtatFrais' || 'modifierFicheFrais':
 
@@ -78,9 +85,10 @@
                              'lesFraisForfait' => $lesFraisForfait,
                              'lesFraisHorsForfait' => $lesFraisHorsForfait,
                              'idVisiteur' => $idVisiteur,
-                             'infosVisiteur' => $infosVisiteur));
+                             'infosVisiteur' => $infosVisiteur,
+                            'lstMois' => $lstMois));
 
-                 if ($action == 'modifierFrais')
+                 if ($action == 'modifierFicheFrais')
                  {
                     $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais); 
                  }

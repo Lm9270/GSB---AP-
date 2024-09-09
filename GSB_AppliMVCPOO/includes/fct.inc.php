@@ -272,3 +272,12 @@ function nbErreurs()
         return "L'envoie n'a pas pu être effectué, erreur lors de l'upload";
     }
  }
+
+
+function ajouterInformation($msg)
+{
+    if (!isset($_REQUEST['informations'])) {
+        $_REQUEST['informations'] = array();
+    }
+    $_REQUEST['informations'][] = $msg;
+}
