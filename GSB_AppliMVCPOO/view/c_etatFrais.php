@@ -21,26 +21,28 @@
 </div>
 <div class="panel panel-info">
     <div class="panel-heading">Eléments forfaitisés</div>
-    <table class="table table-bordered table-responsive">
-        <tr>
-            <?php
-            foreach ($lesFraisForfait as $unFraisForfait) {
-                $libelle = $unFraisForfait['libelle']; ?>
-                <th> <?php echo htmlspecialchars($libelle) ?></th>
+    <form action="<?= HOST;?>validerFrais/action/modifierFicheFrais" method="POST">
+        <table class="table table-bordered table-responsive">
+            <tr>
                 <?php
-            }
-            ?>
-        </tr>
-        <tr>
-            <?php
-            foreach ($lesFraisForfait as $unFraisForfait) {
-                $quantite = $unFraisForfait['quantite']; ?>
-                <td class="qteForfait"><?php echo $quantite ?> </td>
+                foreach ($lesFraisForfait as $unFraisForfait) {
+                    $libelle = $unFraisForfait['libelle']; ?>
+                    <th> <?php echo htmlspecialchars($libelle) ?></th>
+                    <?php
+                }
+                ?>
+            </tr>
+            <tr>
                 <?php
-            }
-            ?>
-        </tr>
-    </table>
+                foreach ($lesFraisForfait as $unFraisForfait) {
+                    if (isset($unFraisForfait['idfrais'])) {$idFrais = $unFraisForfait['idfrais']; }
+                    $quantite = $unFraisForfait['quantite']; ?>
+                    <td class="qteForfait"><input class="form-control" type="text"  value="<?php echo $quantite ?>" name="lesFrais[<?= $idFrais ?>]"></td>
+                    <?php
+                }
+                ?>
+            </tr>
+        </table>
 </div>
 <div class="panel panel-info">
     <div class="panel-heading">Descriptif des éléments hors forfait -
@@ -66,4 +68,8 @@
         ?>
     </table>
 </div>
-&
+
+        <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
+        <input type="hidden" name="mois" value="<?= $mois ?>">
+        <button class="btn btn-success" type="submit">Confirmer les modifications</button>
+    </form>

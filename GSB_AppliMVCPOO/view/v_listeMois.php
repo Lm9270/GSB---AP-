@@ -11,12 +11,12 @@
 ?>
 
 <h2>Mes fiches de frais</h2>
-<div class="row">
+<i class="lead tetx-muted"><?= (isset($_SESSION['metier']) && $_SESSION['metier'] == 'comptable') ? $infosVisiteur['nom'] . ' ' . $infosVisiteur['prenom'] : '' ?></i><div class="row">
     <div class="col-md-4">
         <h3>Sélectionner un mois :</h3>
     </div>
     <div class="col-md-4">
-    <form action="<?=HOST; ?>validerFrais/action/selectionnerMois/idVisiteur/" method="POST" role="form">
+        <form action="<?= HOST; ?>validerFrais/action/voirEtatFrais" method="POST" role="form">
             <div class="form-group">
                 <label for="lstMois" accesskey="n">Mois : </label>
                 <select name="lstMois" class="form-control">
@@ -50,18 +50,20 @@
                                 }
                             }
                         }
-                    
                     ?>
                 </select>
             </div>
-            <input id="ok" type="submit" value="Valider" class="btn btn-success"
-                   role="button">
-            <input id="annuler" type="reset" value="Effacer" class="btn btn-danger"
-                   role="button">
-        </form>
+            <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
+            <div class="form-group">
+                <button type="submit" id="ok" class="btn btn-success" role="button">Valider</button>
+                <button type="reset" id="annuler" class="btn btn-danger" role="button">Effacer</button>
+            </div>
         </form>
         <form action="<?= HOST; ?>validerFrais/action/" method="post">
-            <input id="annuler" type="submit" value="Retour" class="btn btn-danger" role="button">
+            <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
+            <div class="form-group">
+                <button type="submit" id="retour" class="btn btn-danger" role="button">Retour</button>
+            </div>
         </form>
     </div>
 </div>

@@ -397,11 +397,17 @@ class GsbManager
      */
     public function getLesMoisDisponibles($idVisiteur)
     {
-        $requetePrepare = GsbManager::$monPdo->prepare(
-            'SELECT fichefrais.mois AS mois FROM fichefrais '
-            . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
-            . 'ORDER BY fichefrais.mois desc'
-        );
+        $requete = 'SELECT DISTINCT fichefrais.mois AS mois FROM fichefrais '
+        . 'WHERE fichefrais.idvisiteur = :unIdVisiteur ';
+
+        if($_SESSION['metier'] == 'comptable')
+        {
+            $requete .= "AND fichefrais.idEtat = 'CL' OR fichefrais.idEtat = 'CR'"; 
+        }
+        
+        $requete .= ' ORDER BY fichefrais.mois DESC';
+
+        $requetePrepare = GsbManager::$monPdo->prepare($requete); 
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->execute();
         $lesMois = array();
@@ -518,6 +524,23 @@ class GsbManager
         $requetePrepare->execute(); 
 
         return $requetePrepare->fetchAll(); 
+     }
+    
+     /** 
+     * Retourne le nom et prénom d'un visiteur
+     *
+     * @return array
+     */
+     public function getInfosVisiteur($idVisiteur)
+     {
+        $query = 'SELECT nom, prenom
+                  FROM visiteur 
+                  WHERE id = :id';
+
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['id' => $idVisiteur]); 
+
+        return $requetePrepare->fetch(); 
      }
 }
 

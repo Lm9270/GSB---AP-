@@ -22,7 +22,7 @@ class View
         ob_start();
 
         //Si vue v_etatFrais demandée inclure avant v_listeMois
-        if($template == 'v_etatFrais')
+        if($template == 'v_etatFrais' || $template == 'c_etatFrais')
         {
             include(VIEW.'v_listeMois.php');
         }
