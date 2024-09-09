@@ -11,7 +11,7 @@
 
  //Initialisation de l'année et mois de début de la création du jeu d'essai
  //A MODIFIER POUR GENERER VOTRE JEU D'ESSAI
-$moisDebut = '202312';
+$moisDebut = '202407';
 require 'fonctions.php';
 
 $pdo = new PDO('mysql:host=localhost;dbname=gsb_frais', 'root', '');

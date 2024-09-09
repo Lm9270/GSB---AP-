@@ -33,8 +33,6 @@
             $idVisiteur = null; 
          }
 
-         var_dump($idVisiteur);
-
  
          switch($action)
          {
@@ -53,14 +51,13 @@
                                  'infosVisiteur' => $infosVisiteur));
                  break;
 
-             case 'voirEtatFrais' || 'modifierFrais':
+             case 'voirEtatFrais' || 'modifierFicheFrais':
 
                  //Récupérer les informations et fiches du visiteur
                  $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
                  $leMois = $lstMois;
                  $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
                  $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
-                 var_dump($lesFraisForfait);
                  $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
                  $numAnnee = substr($leMois, 0, 4);
                  $numMois = substr($leMois, 4, 2);

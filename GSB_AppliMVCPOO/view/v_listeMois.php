@@ -56,13 +56,12 @@
             <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
             <div class="form-group">
                 <button type="submit" id="ok" class="btn btn-success" role="button">Valider</button>
-                <button type="reset" id="annuler" class="btn btn-danger" role="button">Effacer</button>
             </div>
         </form>
         <form action="<?= HOST; ?>validerFrais/action/" method="post">
             <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
             <div class="form-group">
-                <button type="submit" id="retour" class="btn btn-danger" role="button">Retour</button>
+                <button type="submit" id="retour" class="btn btn-danger" role="button">Annuler</button>
             </div>
         </form>
     </div>

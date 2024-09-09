@@ -16,7 +16,6 @@ class View
     {
         //Extraire le nom de la variable du paramètre
         extract($params);
-        //var_dump($params);
         $template = $this->template;
         //Récupérer la vue sous forme de variable
         ob_start();
@@ -27,7 +26,6 @@ class View
             include(VIEW.'v_listeMois.php');
         }
 
-        var_dump($template); 
         // Template principal 
         include(VIEW.$template.'.php');
 

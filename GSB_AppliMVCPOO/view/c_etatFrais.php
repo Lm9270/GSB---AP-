@@ -71,5 +71,6 @@
 
         <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
         <input type="hidden" name="mois" value="<?= $mois ?>">
+        <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
         <button class="btn btn-success" type="submit">Confirmer les modifications</button>
     </form>
