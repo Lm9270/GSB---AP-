@@ -56,6 +56,9 @@
 <input type="hidden" name="mois" value="<?= $mois ?>">
 <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
 <button class="btn btn-success" type="submit">Confirmer les modifications</button>
+<br>
+
+&nbsp;
 </form>
 
 <div class="panel panel-info">
@@ -85,6 +88,7 @@
                     <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
                     <button class="btn btn-danger" type="submit">Reporter</button>
                     </form>
+                    &nbsp;
                     <form action="<?= HOST; ?>validerFrais/action/refuserHF" method="post">
                     <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
                     <input type="hidden" name="mois" value="<?= $mois ?>">
@@ -105,5 +109,5 @@
     <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
     <button class="btn btn-success" type="submit">Valider la fiche de frais</button>
 </form>
-
+&nbsp;
 </div>
