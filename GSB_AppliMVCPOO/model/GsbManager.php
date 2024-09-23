@@ -560,6 +560,28 @@ class GsbManager
 
     }
 
+    /**
+     * Modifie les éléments forfaitisés mis à jour par le comptable : 
+     */
+    public function modifierElementForfait($idVisiteur, $mois, $elements)
+    {
+        foreach($elements as $key => $element)
+        {
+            $query = 'UPDATE lignefraisforfait
+            SET quantite = :quantite
+            WHERE idVisiteur = :idVisiteur
+            AND mois = :mois
+            AND idFraisForfait = :idFraisForfait';
+
+            $requetePrepare = GsbManager::$monPdo->prepare($query);
+            $requetePrepare->execute(['idVisiteur' => $idVisiteur,
+                                      'mois' => $mois,
+                                      'idFraisForfait' => $key,
+                                      'quantite' => $element]); 
+
+        }
+    }
+
 }
 
 

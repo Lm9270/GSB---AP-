@@ -57,9 +57,7 @@
                     'mois' => $mois, 
                 )); 
             break; 
-
-             case 'voirEtatFrais' || 'modifierFicheFrais':
-
+             case 'voirEtatFrais' :
                  //Récupérer les informations et fiches du visiteur
                  $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
                  $leMois = $lstMois;
@@ -86,13 +84,88 @@
                              'lesFraisHorsForfait' => $lesFraisHorsForfait,
                              'idVisiteur' => $idVisiteur,
                              'infosVisiteur' => $infosVisiteur,
-                            'lstMois' => $lstMois));
+                             'lstMois' => $lstMois,
+                             'modifier' => false));
 
                  if ($action == 'modifierFicheFrais')
                  {
                     $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais); 
                  }
                  break;
+             case 'modifierFicheFrais' :
+                // Effectuer les modifications du comptable : 
+                $lesFraisForfait = $pdo->modifierElementForfait($idVisiteur, $mois, $lesFrais); 
+                //Récupérer les informations et fiches du visiteur
+                $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+                $leMois = $lstMois;
+                $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
+                $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
+                $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+                $numAnnee = substr($leMois, 0, 4);
+                $numMois = substr($leMois, 4, 2);
+                $libEtat = $lesInfosFicheFrais['libEtat'];
+                $montantValide = $lesInfosFicheFrais['montantValide'];
+                $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+                $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+                // Message de confirmation : 
+                ajouterInformation('Les éléments forfaitisés de la fiche de frais ont bien étés mis a jours');
+                //Appel de la vue v_etatFrais
+                $myView = new View('c_etatFrais'); 
+                $myView->render(array('estConnecte' => true,
+                             'lesMois' => $lesMois,
+                             'numMois' => $numMois, 
+                             'numAnnee' => $numAnnee,
+                             'libEtat' => $libEtat,
+                             'dateModif' => $dateModif,
+                             'montantValide' => $montantValide,
+                             'nbJustificatifs' => $nbJustificatifs,
+                             'lesFraisForfait' => $lesFraisForfait,
+                             'lesFraisHorsForfait' => $lesFraisHorsForfait,
+                             'idVisiteur' => $idVisiteur,
+                             'infosVisiteur' => $infosVisiteur,
+                             'lstMois' => $lstMois,
+                             'modifier' => true,
+                             
+             ));
+
+                break; 
+                case 'refuserHF' : 
+                //Récupérer les informations et fiches du visiteur
+                var_dump($idHF); 
+                 
+                 $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+                 $leMois = $lstMois;
+                 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
+                 $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
+                 $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+                 $numAnnee = substr($leMois, 0, 4);
+                 $numMois = substr($leMois, 4, 2);
+                 $libEtat = $lesInfosFicheFrais['libEtat'];
+                 $montantValide = $lesInfosFicheFrais['montantValide'];
+                 $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+                 $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+                 //Appel de la vue v_etatFrais
+                 $myView = new View('c_etatFrais');
+                 $myView->render(array('estConnecte' => true, 
+                             'lesMois' => $lesMois,
+                             'numMois' => $numMois, 
+                             'numAnnee' => $numAnnee,
+                             'libEtat' => $libEtat,
+                             'dateModif' => $dateModif,
+                             'montantValide' => $montantValide,
+                             'nbJustificatifs' => $nbJustificatifs,
+                             'lesFraisForfait' => $lesFraisForfait,
+                             'lesFraisHorsForfait' => $lesFraisHorsForfait,
+                             'idVisiteur' => $idVisiteur,
+                             'infosVisiteur' => $infosVisiteur,
+                             'lstMois' => $lstMois,
+                             'modifier' => false));
+
+                 if ($action == 'modifierFicheFrais')
+                 {
+                    $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais); 
+                 }
+                    break;
              default:
                 $myView = new View('c_selectionnerVisiteur');
                 $myView->render(array('estConnecte' => true,

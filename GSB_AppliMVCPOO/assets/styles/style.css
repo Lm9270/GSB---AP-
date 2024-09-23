@@ -1,3 +1,9 @@
 .header {
     margin-top: 10px;
 }
+
+.msg-conf {
+    background-color: rgba(25, 167, 25, 0.562);
+    color: white;
+    padding: 10px;
+}
