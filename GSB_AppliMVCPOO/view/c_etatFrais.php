@@ -20,9 +20,6 @@
         <strong><u>Montant validé :</u></strong> <?php echo $montantValide ?>
     </div>
 </div>
-<?php if ($modifier == true) {
-    echo "<div class='msg-conf'>" . $_REQUEST['informations'][0] . "</div>";
-} ?>
 <div class="panel-heading">Eléments forfaitisés</div>
 <div>
     <form action="<?= HOST; ?>validerFrais/action/modifierFicheFrais" method="POST">
@@ -57,8 +54,7 @@
 <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
 <button class="btn btn-success" type="submit">Confirmer les modifications</button>
 <br>
-
-&nbsp;
+&nbsp; 
 </form>
 
 <div class="panel panel-info">
@@ -83,18 +79,21 @@
                 <td><?php echo $montant ?></td>
                 <td>
                     <form action="<?= HOST; ?>validerFrais/action/reporterHF" method="post">
-                    <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
-                    <input type="hidden" name="mois" value="<?= $mois ?>">
-                    <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
-                    <button class="btn btn-danger" type="submit">Reporter</button>
+                        <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
+                        <input type="hidden" name="mois" value="<?= $mois ?>">
+                        <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
+                        <input type="hidden" name="idHF" value="<?= $unFraisHorsForfait['id'] ?>" class="btn btn-danger">
+                        <input type="hidden" name="refuse" value="<?= $unFraisHorsForfait['refuse'] ?>" class="btn btn-danger">
+                        <button class="btn btn-danger" type="submit">Reporter</button>
                     </form>
                     &nbsp;
                     <form action="<?= HOST; ?>validerFrais/action/refuserHF" method="post">
-                    <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
-                    <input type="hidden" name="mois" value="<?= $mois ?>">
-                    <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
-                    <input type="hidden" name="idHF" value="<?= $unFraisHorsForfait['id'] ?>" class="btn btn-danger">
-                    <button class="btn btn-danger" type="submit" value="refuserHF" class="btn btn-danger">Refuser</button>
+                        <input type="hidden" name="visiteur" value="<?= $idVisiteur ?>">
+                        <input type="hidden" name="mois" value="<?= $mois ?>">
+                        <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
+                        <input type="hidden" name="idHF" value="<?= $unFraisHorsForfait['id'] ?>" class="btn btn-danger">
+                        <input type="hidden" name="refuse" value="<?= $unFraisHorsForfait['refuse'] ?>" class="btn btn-danger">
+                        <input class="btn btn-danger" type="submit" value="Refuser" class="btn btn-danger">
                     </form>
                 </td>
             </tr>
@@ -109,5 +108,5 @@
     <input type="hidden" name="lstMois" value="<?= $lstMois ?>">
     <button class="btn btn-success" type="submit">Valider la fiche de frais</button>
 </form>
-&nbsp;
+
 </div>

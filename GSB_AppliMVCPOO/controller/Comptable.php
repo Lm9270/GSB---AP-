@@ -85,7 +85,7 @@
                              'idVisiteur' => $idVisiteur,
                              'infosVisiteur' => $infosVisiteur,
                              'lstMois' => $lstMois,
-                             'modifier' => false));
+                             ));
 
                  if ($action == 'modifierFicheFrais')
                  {
@@ -124,14 +124,23 @@
                              'idVisiteur' => $idVisiteur,
                              'infosVisiteur' => $infosVisiteur,
                              'lstMois' => $lstMois,
-                             'modifier' => true,
+                             'message' => 'modifier',
                              
              ));
 
                 break; 
                 case 'refuserHF' : 
+
+                if ((int)$refuse == 0)
+                {
+                    var_dump($idHF); 
+                    $pdo->refuserHF($idHF); 
+                    ajouterInformation('Ligne de frais hors forfait refusée');
+                } else {
+                    ajouterInformation('La ligne de frais sélectionnée a déjà été refusée');
+                }
+
                 //Récupérer les informations et fiches du visiteur
-                var_dump($idHF); 
                  
                  $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
                  $leMois = $lstMois;
@@ -159,13 +168,59 @@
                              'idVisiteur' => $idVisiteur,
                              'infosVisiteur' => $infosVisiteur,
                              'lstMois' => $lstMois,
-                             'modifier' => false));
+                             'message' => 'refuserHF'));
 
                  if ($action == 'modifierFicheFrais')
                  {
                     $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais); 
                  }
-                    break;
+                break;
+                case 'reporterHF':
+                
+                 if ((int)$refuse == 1) 
+                 {
+                    ajouterInformation("Il est impossible de reporter une ligne de frais ayant déjà été refusée"); 
+                 } else {
+                    $pdo->reporterHF($idHF, $idVisiteur, (int)$mois); 
+                    ajouterInformation("La ligne de frais hors forfait a été reportée au mois prochain"); 
+                 }
+
+                 $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+                 $leMois = $lstMois;
+                 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
+                 $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
+                 $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+                 $numAnnee = substr($leMois, 0, 4);
+                 $numMois = substr($leMois, 4, 2);
+                 $libEtat = $lesInfosFicheFrais['libEtat'];
+                 $montantValide = $lesInfosFicheFrais['montantValide'];
+                 $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+                 $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+                 //Appel de la vue v_etatFrais
+                 $myView = new View('c_etatFrais');
+                 $myView->render(array('estConnecte' => true, 
+                             'lesMois' => $lesMois,
+                             'numMois' => $numMois, 
+                             'numAnnee' => $numAnnee,
+                             'libEtat' => $libEtat,
+                             'dateModif' => $dateModif,
+                             'montantValide' => $montantValide,
+                             'nbJustificatifs' => $nbJustificatifs,
+                             'lesFraisForfait' => $lesFraisForfait,
+                             'lesFraisHorsForfait' => $lesFraisHorsForfait,
+                             'idVisiteur' => $idVisiteur,
+                             'infosVisiteur' => $infosVisiteur,
+                             'lstMois' => $lstMois,
+                             'message' => 'refuserHF'));
+
+
+                if ($action == 'modifierFicheFrais')
+                 {
+                    $pdo->majFraisForfait($idVisiteur, $mois, $lesFrais); 
+                 }
+
+                break; 
+
              default:
                 $myView = new View('c_selectionnerVisiteur');
                 $myView->render(array('estConnecte' => true,

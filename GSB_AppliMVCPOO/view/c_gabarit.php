@@ -19,6 +19,24 @@
         <link href="<?= ASSETS; ?>styles/style.css" rel="stylesheet">
     </head>
     <body>
+            <?php 
+            if (isset($message))
+            {
+                echo "<div class='message'>";
+
+                switch ($message) {
+                    case "modifier":
+                        echo $_REQUEST['informations'][0];
+                        break;
+                    case 'refuserHF' : 
+                        echo $_REQUEST['informations'][0];
+                        break; 
+                }
+
+                echo '</div>';
+            }
+            ?> 
+        </div>
         <div class="container">
             <?php
             $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_SPECIAL_CHARS);

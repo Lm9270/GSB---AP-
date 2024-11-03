@@ -23,31 +23,32 @@
                     <?php
                         foreach ($lesMois as $unMois) 
                         {
-                            $mois = $unMois['mois'];
-                            $numA = $unMois['numAnnee'];
-                            $numM = $unMois['numMois'];
-                            
-                            if ($mois == $leMois) {
-                                ?>
-                                <option selected value="<?php echo $mois ?>">
-                                    <?php echo $numM . '/' . $numA ?> </option>
-                                <?php
-                            } else 
-                            {
-                                if(isset($numMois) && isset($numAnnee) && $numM == $numMois && $numA == $numAnnee)
-                                {
+
+                                $mois = $unMois['mois'];
+                                $numA = $unMois['numAnnee'];
+                                $numM = $unMois['numMois'];
+                                
+                                if ($mois == $leMois) {
                                     ?>
                                     <option selected value="<?php echo $mois ?>">
-                                        <?php echo $numMois . '/' . $numAnnee ?> </option>
-                                    <?php
-                                }
-                                else
-                                {
-                                    ?>
-                                    <option value="<?php echo $mois ?>">
                                         <?php echo $numM . '/' . $numA ?> </option>
                                     <?php
-                                }
+                                } else 
+                                {
+                                    if(isset($numMois) && isset($numAnnee) && $numM == $numMois && $numA == $numAnnee)
+                                    {
+                                        ?>
+                                        <option selected value="<?php echo $mois ?>">
+                                            <?php echo $numMois . '/' . $numAnnee ?> </option>
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <option value="<?php echo $mois ?>">
+                                            <?php echo $numM . '/' . $numA ?> </option>
+                                        <?php
+                                    }
                             }
                         }
                     ?>

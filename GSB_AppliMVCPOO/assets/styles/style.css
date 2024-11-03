@@ -7,3 +7,17 @@
     color: white;
     padding: 10px;
 }
+
+.message {
+    top: 0;
+    position: sticky;
+    color: rgb(255, 255, 255);
+    background-color: rgb(87, 168, 87);
+    padding: 10px;
+    z-index: 1000;
+    padding-left: 20%;
+}
+
+.refuse {
+    color: red;
+}

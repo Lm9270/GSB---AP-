@@ -402,7 +402,7 @@ class GsbManager
 
         if($_SESSION['metier'] == 'comptable')
         {
-            $requete .= "AND fichefrais.idEtat = 'CL' OR fichefrais.idEtat = 'CR'"; 
+            $requete .= "AND (fichefrais.idEtat = 'CL' OR fichefrais.idEtat = 'CR')"; 
         }
         
         $requete .= ' ORDER BY fichefrais.mois DESC';
@@ -458,9 +458,9 @@ class GsbManager
      * Modifie l'état et la date de modification d'une fiche de frais.
      * Modifie le champ idEtat et met la date de modif à aujourd'hui.
      *
-     * @param String $idVisiteur ID du visiteur
-     * @param String $mois       Mois sous la forme aaaamm
-     * @param String $etat       Nouvel état de la fiche de frais
+     * @param  string $idVisiteur ID du visiteur
+     * @param string $mois       Mois sous la forme aaaamm
+     * @param  string $etat       Nouvel état de la fiche de frais
      *
      * @return null
      */
@@ -482,9 +482,9 @@ class GsbManager
      * Modifie l'état et la date de modification d'une fiche de frais.
      * Modifie le champ idEtat et met la date de modif à aujourd'hui.
      *
-     * @param String $idVisiteur ID du visiteur
-     * @param String $mois       Mois sous la forme aaaamm
-     * @param String $etat       Nouvel état de la fiche de frais
+     * @param string $idVisiteur ID du visiteur
+     * @param string $mois       Mois sous la forme aaaamm
+     * @param string $etat       Nouvel état de la fiche de frais
      *
      * @return null
      */
@@ -580,6 +580,47 @@ class GsbManager
                                       'quantite' => $element]); 
 
         }
+    }
+
+    public function refuserHF($id)
+    {
+        $query = 'UPDATE lignefraishorsforfait
+              SET libelle = CONCAT(" (REFUSÉ) ", libelle),
+              refuse = 1
+              WHERE id = :id';
+             
+    $requetePrepare = GsbManager::$monPdo->prepare($query);
+    $requetePrepare->execute(['id' => $id]);  
+    } 
+
+    public function reporterHF($id, $idVisiteur, $mois)
+    {
+        $query = 'SELECT * 
+                  FROM fichefrais
+                  WHERE idVisiteur = :idVisiteur
+                  AND mois = :mois + 1'; 
+
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['idVisiteur' => $idVisiteur, 'mois' => $mois]); 
+        
+        $resultat = $requetePrepare->fetchAll(PDO::FETCH_ASSOC);
+        
+        if ($resultat)
+        {
+            $query = 'UPDATE lignefraishorsforfait 
+            SET mois = mois + 1
+            WHERE id = :id'; 
+            
+            $requetePrepare = GsbManager::$monPdo->prepare($query);
+            $requetePrepare->execute(['id'=> $id]);
+        } else {
+            $query = 'INSERT INTO `fichefrais`(`idVisiteur`, `mois`, `nbJustificatifs`, `montantValide`, `dateModif`, `idEtat`)
+             VALUES (:idVisiteur, :mois + 1, 0, 0, now(), "CR")'; 
+
+            $requetePrepare = GsbManager::$monPdo->prepare($query);
+            $requetePrepare->execute(['idVisiteur'=> $idVisiteur, 'mois' => $mois]);
+        }
+        
     }
 
 }

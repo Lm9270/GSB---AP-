@@ -33,10 +33,6 @@
                            class="btn btn-success btn-lg" role="button">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <br>Valider une fiche de frais</a>
-                        <a href="<?= HOST; ?>etatFrais/action/selectionnerMois"
-                           class="btn btn-primary btn-lg" role="button">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                            <br>Afficher mes fiches de frais</a>
                     </div>
                 </div>
             </div>
