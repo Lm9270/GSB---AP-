@@ -547,7 +547,7 @@ class GsbManager
       * Modifie l'état d'une fiche de frais de CL à VA
       * Sert a valider des fiches de frais
       */
-     public function modifierEtatFrais($idVisiteur, $mois)
+     public function validerFicheFrais($idVisiteur, $mois)
     {
         $query = 'UPDATE fichefrais 
                 SET idEtat = "VA"
@@ -557,6 +557,31 @@ class GsbManager
         $requetePrepare = GsbManager::$monPdo->prepare($query);
         $requetePrepare->execute(['idVisiteur' => $idVisiteur, 
                                     'mois' => $mois]); 
+
+
+        $query = 'select sum(montant) as cumul from lignefraishorsforfait '
+            . "where lignefraishorsforfait.idvisiteur = :idVisiteur "
+            . "and lignefraishorsforfait.mois = :mois ";
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['idVisiteur' => $idVisiteur, 'mois' => $mois]); 
+        $ligne = $requetePrepare->fetch();
+        $cumulMontantHF = $ligne['cumul'];
+        $query = 'select sum(lignefraisforfait.quantite * fraisforfait.montant) '
+                . 'as cumul '
+                . 'from lignefraisforfait, fraisforfait '
+                . 'where lignefraisforfait.idfraisforfait = fraisforfait.id '
+                . "and lignefraisforfait.idvisiteur = :idVisiteur "
+                . "and lignefraisforfait.mois = :mois ";
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['idVisiteur' => $idVisiteur, 'mois' => $mois]); 
+        $ligne = $requetePrepare->fetch();
+        $cumulMontantForfait = $ligne['cumul'];
+        $montantValide = $cumulMontantHF + $cumulMontantForfait;
+
+        $query = "update fichefrais set montantvalide = :montant "
+            . "where idvisiteur = :idVisiteur and mois = :mois";
+        $requetePrepare = GsbManager::$monPdo->prepare($query);
+        $requetePrepare->execute(['montant' => $montantValide, 'idVisiteur' => $idVisiteur, 'mois' => $mois]);
 
     }
 

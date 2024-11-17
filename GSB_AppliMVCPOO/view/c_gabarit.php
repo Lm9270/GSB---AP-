@@ -59,13 +59,18 @@
                                     Accueil
                                 </a>
                             </li>
-                            <li <?php if ($uc == 'validerFrais') { ?>class="active"<?php } ?>>
+                            <li <?php if ($uc == 'validerFrais/action/') { ?>class="active"<?php } ?>>
                                 <a href="<?= HOST; ?>validerFrais/action/">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                     Valider une fiche de frais
                                 </a>
                             </li>
-
+                            <li <?php if ($uc == 'consulterFrais') { ?>class="active"<?php } ?>>
+                                <a href="<?= HOST; ?>consulterFrais">
+                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                    Consulter une fiche de frais
+                                </a>
+                            </li>
                             <li
                             <?php if ($uc == 'deconnexion') { ?>class="active"<?php } ?>>
                                 <a href="<?= HOST; ?>deconnexion">

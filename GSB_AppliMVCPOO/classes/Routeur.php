@@ -16,6 +16,7 @@ class Routeur
                             "c_accueil"             => ['controller' => "Comptable", "method" => "c_accueil"],
                             "gererFrais"            => ["controller" => "Visiteur", "method" => "gererFrais"],
                             "etatFrais"             => ["controller" => "Visiteur", "method" => "etatFrais"],
+                            "consulterFrais"        => ["controller" => "Comptable", "method" => "consulterFrais"],
                             "validerFrais"          => ["controller" => "Comptable", "method" => "validerFrais"],
                         ];
 

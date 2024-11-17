@@ -43,14 +43,14 @@
                  $lesCles = array_keys($lesMois);
                  $moisASelectionner = $lesCles[0];
                  //Affichage de la vue actualisée
-                 $myView = new View('v_listeMois');
+                 $myView = new View('c_listeMois');
                  $myView->render(array('estConnecte' => true, 
                                  'lesMois' => $lesMois,
                                  'idVisiteur' => $idVisiteur,
                                  'infosVisiteur' => $infosVisiteur));
                  break;
             case 'valider':
-                    $pdo->modifierEtatFrais($idVisiteur, $mois); 
+                    $pdo->validerFicheFrais($idVisiteur, $mois); 
                     ajouterInformation("La fiche de frais du visiteur " . $infosVisiteur['nom'] . " " . $infosVisiteur['prenom'] . " du " . $mois . " a bien été validée"); 
                     $myView = new View('c_confirmationValidation');
                     $myView->render(array('estConnecte' => true, 
@@ -228,6 +228,34 @@
                                 'lesVisiteurs' => $lesVisiteurs,)); 
                 break;
          }
+     }
 
+     public function consulterFrais($params)
+     {
+
+      $idComptable = $_SESSION['id'];
+         $pdo = GsbManager::getPdoGsb();
+         extract($params);
+ 
+         $lesFichesFrais = $pdo->getLesFichesFrais();
+         $lesVisiteurs = $pdo->getLesVisiteurs();
+
+         if (isset($visiteur))
+         {
+            $idVisiteur = $visiteur;
+            $infosVisiteur = $pdo->getInfosVisiteur($idVisiteur); 
+         } else {
+            $idVisiteur = null; 
+         }
+
+         switch ($action)
+         {
+            default:
+                $myView = new View('c_selectionnerVisiteur');
+                $myView->render(array('estConnecte' => true,
+                                'idVisiteurSelectionne' => $idVisiteur,
+                                'lesVisiteurs' => $lesVisiteurs,)); 
+                break;
+         }
      }
  }

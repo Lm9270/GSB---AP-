@@ -33,6 +33,10 @@
                            class="btn btn-success btn-lg" role="button">
                             <span class="glyphicon glyphicon-pencil"></span>
                             <br>Valider une fiche de frais</a>
+                            <a href="<?= HOST; ?>consulterFrais/action/"
+                           class="btn btn-primary btn-lg" role="button">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            <br>Consulter une fiche de frais</a>
                     </div>
                 </div>
             </div>
